@@ -12,8 +12,33 @@ def check(word1,word2):
     else:
         return False
 
-array = readfile()
+def anagram_list(word):
+    array = readfile()
+    anagram_array = []
+    for i in range(len(array)):
+        if (check(word,array[i])):
+            anagram_array.append(array[i].rstrip())
+    return anagram_array
+
+def guess(array):
+    g = input("Guess an anagram! Press ` to quit. ")
+    if (g == "`"):
+        print("You gave up! Here's the list of anagrams:")
+        print(array)
+        return
+    else:
+        if (g in array):
+            print("That's right!")
+            array.remove(g)
+            if (len(array) == 0):
+                print("You guessed all possible anagrams!")
+            else:
+                guess(array)
+        else:
+            print("That's not a valid anagram.")
+            guess(array)
+
 word = input("Enter a word: ")
-for i in range(len(array)):
-    if (check(word,array[i])):
-        print(array[i])
+array = anagram_list(word)
+print("This word has " + str(len(array)) + " anagrams.")
+guess(array)
